@@ -1,12 +1,12 @@
 import { baseUrl } from '../../cypress.json';
-import { notes } from '../fixtures/notes.json';
+import { notesResponse } from '../fixtures/notesResponse.json';
 
 describe('Note app tests', () => {
     beforeEach(() => {
         cy.intercept({
             method: 'GET',
             url: '/notes'
-        }, notes);
+        }, notesResponse);
 
         cy.visit(baseUrl);
     });
@@ -14,7 +14,7 @@ describe('Note app tests', () => {
     it('Should show notes correctly', () => {
         cy.get('h1').should('have.text', `Collect Your  Thoughts.`);
         
-        notes.forEach((note, index) => {
+        notesResponse.forEach((note, index) => {
             cy.get('.shorthandContent').within((element) => {
                 cy.get(element)
                     .eq(index)
